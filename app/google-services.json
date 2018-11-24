@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "458170622362",
+    "firebase_url": "https://bootletinder.firebaseio.com",
+    "project_id": "bootletinder",
+    "storage_bucket": "bootletinder.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:458170622362:android:764b3f320fdaa116",
+        "android_client_info": {
+          "package_name": "com.example.spacecakes9.bootlegtinder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "458170622362-iqskphhaf0o0k55lcrhskaqjnmb56vr7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.spacecakes9.bootlegtinder",
+            "certificate_hash": "ca9074304ed51a1fb8041cdab038a1dff441fb2a"
+          }
+        },
+        {
+          "client_id": "458170622362-3io8pk8jchkgptpbl6ktrkq9620q9eqd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4rqSPxeOdCQebEfJQm83CenkWKWK3r0g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "458170622362-3io8pk8jchkgptpbl6ktrkq9620q9eqd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
