@@ -22,42 +22,28 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ArrayList<String> al;
-    private ArrayAdapter<String> arrayAdapter;
-    private int i;
-
+    private Cards cards_data[];
+    private com.example.spacecakes9.bootlegtinder.ArrayAdapter arrayAdapter;
     private FirebaseAuth mAuth;
 
-    //the following line was said to not be needed but for now it shall just be commented out
-    //@InjectView(R.id.frame) SwipeFlingAdapterView flingContainer;
-
+    ListView listView;
+    List<Cards> rowItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //below commnted by arley
-        //ButterKnife.inject(this);
-
+        
         mAuth = FirebaseAuth.getInstance();
 
         checkUserSex();
-        al = new ArrayList<>();
+        rowItems = new ArrayList<Cards>();
 
-        /*al.add("php");
-        al.add("c");
-        al.add("python");
-        al.add("java");
-        al.add("html");
-        al.add("c++");
-        al.add("css");
-        al.add("javascript");*/
-
-        arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.helloText, al );
+        arrayAdapter = new com.example.spacecakes9.bootlegtinder.ArrayAdapter(this, R.layout.item,rowItems );
 
 
         SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
@@ -69,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             public void removeFirstObjectInAdapter() {
                 // this is the simplest way to delete an object from the Adapter (/AdapterView)
                 Log.d("LIST", "removed object!");
-                al.remove(0);
+                rowItems.remove(0);
                 arrayAdapter.notifyDataSetChanged();
             }
 
@@ -182,7 +168,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 if(dataSnapshot.exists()){
-                    al.add(dataSnapshot.child("name").getValue().toString());
+                    Cards item = new Cards(dataSnapshot.getKey(),dataSnapshot.child("name").getValue().toString());
+                    rowItems.add(item);
+                    //rowItems.add(dataSnapshot.child("name").getValue().toString());
                     arrayAdapter.notifyDataSetChanged();
                 }
             }
