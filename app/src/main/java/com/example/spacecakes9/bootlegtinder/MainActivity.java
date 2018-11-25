@@ -26,9 +26,11 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+
     private Cards cards_data[];
     private com.example.spacecakes9.bootlegtinder.ArrayAdapter arrayAdapter;
     private FirebaseAuth mAuth;
+
 
     ListView listView;
     List<Cards> rowItems;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -168,9 +171,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 if(dataSnapshot.exists()){
+
                     Cards item = new Cards(dataSnapshot.getKey(),dataSnapshot.child("name").getValue().toString());
                     rowItems.add(item);
                     //rowItems.add(dataSnapshot.child("name").getValue().toString());
+
                     arrayAdapter.notifyDataSetChanged();
                 }
             }
