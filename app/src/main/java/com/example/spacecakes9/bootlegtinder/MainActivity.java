@@ -31,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     private com.example.spacecakes9.bootlegtinder.ArrayAdapter arrayAdapter;
     private FirebaseAuth mAuth;
 
+    private String currentUID;
+    private DatabaseReference usersDb;
+
 
     ListView listView;
     List<Cards> rowItems;
@@ -40,8 +43,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        usersDb = FirebaseDatabase.getInstance().getReference().child("Users");
 
         mAuth = FirebaseAuth.getInstance();
+        currentUID = mAuth.getCurrentUser().getUid();
 
         checkUserSex();
         rowItems = new ArrayList<Cards>();
@@ -72,11 +77,20 @@ public class MainActivity extends AppCompatActivity {
                 //BOM:BITE ORDER MARKS BUT WENT WITH AN OPTION AVAILABLE THAT SAID
                 //REMOVE BITE ORDER MARKS BUT NOT SURE WHAT THAT DID
                 //makeToast(MainActivity.this, "Left!");
+
+                Cards obj = (Cards) dataObject;
+                String userId = obj.getUserId();
+                usersDb.child(oppositeUserSex).child(userId).child("connections").child("miss").child(currentUID).setValue(true);
+
                 Toast.makeText(MainActivity.this, "Left", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
+
+                Cards obj = (Cards) dataObject;
+                String userId = obj.getUserId();
+                usersDb.child(oppositeUserSex).child(userId).child("connections").child("hit").child(currentUID).setValue(true);
                 Toast.makeText(MainActivity.this, "Right", Toast.LENGTH_SHORT).show();
 
                 //below was commented by arley
@@ -86,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
                 // Ask for more data here
-                //arley added this comment n commneted out the below code because it would not be necessary as would not be emptying sopposedly
+                //arley added this comment n commented out the below code because it would not be necessary as would not be emptying sopposedly
                 /*al.add("XML ".concat(String.valueOf(i)));
                 arrayAdapter.notifyDataSetChanged();
                 Log.d("LIST", "notified");
@@ -170,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
         oppositeSexDb.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if(dataSnapshot.exists()){
+                if(dataSnapshot.exists() && !dataSnapshot.child("connections").child("miss").hasChild(currentUID) && !dataSnapshot.child("connections").child("hit").hasChild(currentUID)){
 
                     Cards item = new Cards(dataSnapshot.getKey(),dataSnapshot.child("name").getValue().toString());
                     rowItems.add(item);
